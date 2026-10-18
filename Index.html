@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StoryMitra AI</title>
+<style>
+body{margin:0;font-family:Arial,sans-serif;background:#101426;color:white;padding:20px}
+main{max-width:600px;margin:auto}
+h1{color:#a78bfa}
+p{color:#d1d5db}
+input,select,button,textarea{box-sizing:border-box;width:100%;padding:13px;margin:8px 0;border-radius:10px;font-size:16px}
+input,select,textarea{background:#202942;color:white;border:1px solid #59627a}
+button{background:#8b5cf6;color:white;border:0;font-weight:bold}
+.card{background:#1b2340;padding:16px;border-radius:14px;margin-top:16px}
+.story{white-space:pre-wrap;line-height:1.6}
+.small{width:auto;margin-right:6px}
+</style>
+</head>
+<body>
+<main>
+<h1>📚 StoryMitra AI</h1>
+<p>Create, save and read your own cartoon stories!</p>
+
+<div class="card">
+<label>Story topic</label>
+<input id="topic" placeholder="e.g. A brave little rabbit">
+
+<label>Language</label>
+<select id="lang">
+<option>English</option>
+<option>Marathi</option>
+<option>Hindi</option>
+</select>
+
+<button onclick="makeStory()">✨ Create Story Demo</button>
+<p id="status"></p>
+<div id="result" class="story"></div>
+<button id="saveBtn" hidden onclick="saveStory()">💾 Save Story</button>
+</div>
+
+<div class="card">
+<h2>📖 Saved Stories / History</h2>
+<div id="history"></div>
+<button onclick="clearHistory()">Delete All History</button>
+</div>
+
+<script>
+let currentStory="";
+function makeStory(){
+const topic=document.getElementById('topic').value.trim();
+const lang=document.getElementById('lang').value;
+if(!topic){alert('Please enter a story topic!');return;}
+const templates={
+English:`Once upon a time, there was a little hero who loved ${topic}. One day, a big problem appeared. The hero stayed brave, helped friends, and found a clever solution. Everyone celebrated happily. Moral: Courage and kindness can change the world!`,
+Marathi:`एके काळी ${topic} या विषयावर एक सुंदर गोष्ट होती. एके दिवशी एक मोठी अडचण आली. छोट्या नायकाने धैर्याने विचार केला, मित्रांची मदत घेतली आणि प्रश्न सोडवला. सर्वजण आनंदी झाले. बोध: धैर्य आणि दयाळूपणा जग बदलू शकतात!`,
+Hindi:`एक बार ${topic} के बारे में एक सुंदर कहानी थी। एक दिन बड़ी समस्या आई। छोटे नायक ने हिम्मत से काम लिया और दोस्तों की मदद से समस्या हल की। सभी खुश हो गए। सीख: साहस और दया दुनिया बदल सकते हैं!`
+};
+currentStory=templates[lang];
+document.getElementById('result').textContent=currentStory;
+document.getElementById('status').textContent='Demo story created!';
+document.getElementById('saveBtn').hidden=false;
+}
+function getSaved(){try{return JSON.parse(localStorage.getItem('storymitraHistory')||'[]')}catch(e){return []}}
+function saveStory(){
+if(!currentStory)return;
+let items=getSaved();
+items.unshift({topic:document.getElementById('topic').value,lang:document.getElementById('lang').value,story:currentStory});
+localStorage.setItem('storymitraHistory',JSON.stringify(items.slice(0,30)));
+showHistory();
+document.getElementById('status').textContent='Story saved on this device!';
+}
+function showHistory(){
+const items=getSaved();
+const box=document.getElementById('history');
+box.innerHTML='';
+if(!items.length){box.textContent='No saved stories yet.';return;}
+items.forEach((item,i)=>{
+const card=document.createElement('div');
+card.className='card';
+const title=document.createElement('h3');
+title.textContent=item.topic+' ('+item.lang+')';
+const story=document.createElement('p');
+story.textContent=item.story;
+const load=document.createElement('button');
+load.textContent='Open Story';
+load.onclick=()=>{currentStory=item.story;document.getElementById('topic').value=item.topic;document.getElementById('lang').value=item.lang;document.getElementById('result').textContent=item.story;document.getElementById('saveBtn').hidden=false;window.scrollTo(0,0)};
+const del=document.createElement('button');
+del.textContent='Delete';
+del.onclick=()=>{let a=getSaved();a.splice(i,1);localStorage.setItem('storymitraHistory',JSON.stringify(a));showHistory()};
+card.append(title,story,load,del);box.append(card);
+});
+}
+function clearHistory(){if(confirm('Delete all saved stories?')){localStorage.removeItem('storymitraHistory');showHistory()}}
+showHistory();
+</script>
+</main>
+</body>
+</html>
