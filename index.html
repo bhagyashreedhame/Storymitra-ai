@@ -1,100 +1,183 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="mr">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StoryMitra AI</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="StoryMitra AI - मराठी कथा, कार्टून स्टोरी आणि व्हिडिओ स्क्रिप्ट कल्पना.">
+<title>StoryMitra AI - Stories & AI Tools</title>
 <style>
-body{margin:0;font-family:Arial,sans-serif;background:#101426;color:white;padding:20px}
-main{max-width:600px;margin:auto}
-h1{color:#a78bfa}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#101426;color:white;padding:16px;line-height:1.6}
+main{max-width:700px;margin:auto}
+h1,h2{color:#a78bfa}
 p{color:#d1d5db}
-input,select,button,textarea{box-sizing:border-box;width:100%;padding:13px;margin:8px 0;border-radius:10px;font-size:16px}
-input,select,textarea{background:#202942;color:white;border:1px solid #59627a}
+nav{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0}
+a{color:#c4b5fd}
+nav a{background:#202942;padding:8px 10px;border-radius:8px}
+input,select,button{width:100%;padding:12px;margin:8px 0;border-radius:9px;font-size:16px}
+input,select{background:#202942;color:white;border:1px solid #59627a}
 button{background:#8b5cf6;color:white;border:0;font-weight:bold}
-.card{background:#1b2340;padding:16px;border-radius:14px;margin-top:16px}
-.story{white-space:pre-wrap;line-height:1.6}
-.small{width:auto;margin-right:6px}
+.card{background:#1b2340;padding:16px;border-radius:14px;margin:16px 0}
+.story{white-space:pre-wrap;line-height:1.7}
+footer{border-top:1px solid #59627a;margin-top:24px;padding-top:12px}
 </style>
 </head>
 <body>
 <main>
+<header>
 <h1>📚 StoryMitra AI</h1>
-<p>Create, save and read your own cartoon stories!</p>
+<p>मराठी कथा, कार्टून स्टोरी आणि व्हिडिओ कल्पनांचे व्यासपीठ.</p>
+<nav>
+<a href="#stories">कथा तयार करा</a>
+<a href="#about">About Us</a>
+<a href="#contact">Contact Us</a>
+<a href="#privacy">Privacy Policy</a>
+</nav>
+</header>
 
-<div class="card">
-<label>Story topic</label>
-<input id="topic" placeholder="e.g. A brave little rabbit">
+<section id="stories" class="card">
+<h2>✨ Story Generator</h2>
+<label for="topic">कथेचा विषय</label>
+<input id="topic" placeholder="उदा. शूर ससा">
 
-<label>Language</label>
+<label for="lang">भाषा</label>
 <select id="lang">
-<option>English</option>
-<option>Marathi</option>
-<option>Hindi</option>
+<option value="Marathi">मराठी</option>
+<option value="English">English</option>
+<option value="Hindi">हिंदी</option>
 </select>
 
-<button onclick="makeStory()">✨ Create Story Demo</button>
-<p id="status"></p>
+<button onclick="makeStory()">कथा तयार करा</button>
+<p id="status" aria-live="polite"></p>
 <div id="result" class="story"></div>
-<button id="saveBtn" hidden onclick="saveStory()">💾 Save Story</button>
-</div>
+<button id="saveBtn" hidden onclick="saveStory()">💾 कथा Save करा</button>
+</section>
 
-<div class="card">
+<section class="card">
 <h2>📖 Saved Stories / History</h2>
 <div id="history"></div>
-<button onclick="clearHistory()">Delete All History</button>
-</div>
+<button onclick="clearHistory()">सर्व History हटवा</button>
+</section>
+
+<section id="about" class="card">
+<h2>About Us</h2>
+<p>StoryMitra AI हे कथा, कार्टून स्टोरी आणि व्हिडिओ स्क्रिप्टच्या कल्पना तयार करण्यासाठी बनवलेले व्यासपीठ आहे. वाचक आणि नवोदित निर्मात्यांना सर्जनशील कल्पना मिळाव्यात हा आमचा उद्देश आहे.</p>
+<p>सध्या उपलब्ध कथा जनरेटर हा डेमो आहे. तो विषयावर आधारित नमुना कथा तयार करतो; तो खऱ्या AI सेवेशी जोडलेला नाही.</p>
+</section>
+
+<section id="contact" class="card">
+<h2>Contact Us</h2>
+<p>वेबसाइटविषयी सूचना किंवा प्रश्न असल्यास वेबसाइटच्या मालकाशी संपर्क साधा.</p>
+<p>संपर्क ईमेल येथे जोडा: <strong>तुमचा ईमेल पत्ता येथे लिहा</strong></p>
+</section>
+
+<section id="privacy" class="card">
+<h2>Privacy Policy</h2>
+<p>ही वेबसाइट कथा तयार करण्यासाठी तुम्ही दिलेला विषय आणि भाषा वापरते.</p>
+<p>Save History सुविधा या ब्राउझरच्या local storage मध्ये कथा जतन करते. त्या त्याच ब्राउझरमधून पाहता किंवा हटवता येतात. ब्राउझरचा डेटा हटवल्यास सेव्ह केलेल्या कथा नष्ट होऊ शकतात.</p>
+<p>सध्या या डेमोमध्ये कथा तयार करण्यासाठी बाह्य AI API जोडलेली नाही. भविष्यात जाहिराती किंवा इतर सेवा जोडल्यास, त्यांचे डेटा संकलन आणि वापर याबद्दल ही पॉलिसी अद्ययावत केली जाईल.</p>
+<p>प्रश्नांसाठी वेबसाइटच्या मालकाचा संपर्क पत्ता येथे द्यावा.</p>
+</section>
+
+<footer>
+<p>© <span id="year"></span> StoryMitra AI</p>
+<nav>
+<a href="#about">About Us</a>
+<a href="#contact">Contact Us</a>
+<a href="#privacy">Privacy Policy</a>
+</nav>
+</footer>
+</main>
 
 <script>
 let currentStory="";
+
 function makeStory(){
-const topic=document.getElementById('topic').value.trim();
-const lang=document.getElementById('lang').value;
-if(!topic){alert('Please enter a story topic!');return;}
+const topic=document.getElementById("topic").value.trim();
+const lang=document.getElementById("lang").value;
+if(!topic){alert("कृपया कथेचा विषय लिहा.");return;}
+
 const templates={
-English:`Once upon a time, there was a little hero who loved ${topic}. One day, a big problem appeared. The hero stayed brave, helped friends, and found a clever solution. Everyone celebrated happily. Moral: Courage and kindness can change the world!`,
-Marathi:`एके काळी ${topic} या विषयावर एक सुंदर गोष्ट होती. एके दिवशी एक मोठी अडचण आली. छोट्या नायकाने धैर्याने विचार केला, मित्रांची मदत घेतली आणि प्रश्न सोडवला. सर्वजण आनंदी झाले. बोध: धैर्य आणि दयाळूपणा जग बदलू शकतात!`,
-Hindi:`एक बार ${topic} के बारे में एक सुंदर कहानी थी। एक दिन बड़ी समस्या आई। छोटे नायक ने हिम्मत से काम लिया और दोस्तों की मदद से समस्या हल की। सभी खुश हो गए। सीख: साहस और दया दुनिया बदल सकते हैं!`
+Marathi:`एके काळी ${topic} या विषयावर एक सुंदर गोष्ट होती. एके दिवशी मोठी अडचण आली. छोट्या नायकाने धैर्याने विचार केला, मित्रांची मदत घेतली आणि प्रश्न सोडवला. सर्वजण आनंदी झाले.\n\nबोध: धैर्य आणि दयाळूपणा जग बदलू शकतात!`,
+English:`Once upon a time, there was a little hero in a story about ${topic}. One day, a big problem appeared. The hero stayed brave, helped friends, and found a clever solution.\n\nMoral: Courage and kindness matter!`,
+Hindi:`एक बार ${topic} के बारे में एक सुंदर कहानी थी। एक दिन बड़ी समस्या आई। छोटे नायक ने हिम्मत से काम लिया और दोस्तों की मदद से समस्या हल की।\n\nसीख: साहस और दया महत्वपूर्ण हैं!`
 };
+
 currentStory=templates[lang];
-document.getElementById('result').textContent=currentStory;
-document.getElementById('status').textContent='Demo story created!';
-document.getElementById('saveBtn').hidden=false;
+document.getElementById("result").textContent=currentStory;
+document.getElementById("status").textContent="नमुना कथा तयार झाली.";
+document.getElementById("saveBtn").hidden=false;
 }
-function getSaved(){try{return JSON.parse(localStorage.getItem('storymitraHistory')||'[]')}catch(e){return []}}
+
+function getSaved(){
+try{return JSON.parse(localStorage.getItem("storymitraHistory")||"[]");}
+catch(e){return [];}
+}
+
 function saveStory(){
 if(!currentStory)return;
-let items=getSaved();
-items.unshift({topic:document.getElementById('topic').value,lang:document.getElementById('lang').value,story:currentStory});
-localStorage.setItem('storymitraHistory',JSON.stringify(items.slice(0,30)));
+const items=getSaved();
+items.unshift({
+topic:document.getElementById("topic").value.trim(),
+lang:document.getElementById("lang").value,
+story:currentStory
+});
+localStorage.setItem("storymitraHistory",JSON.stringify(items.slice(0,30)));
 showHistory();
-document.getElementById('status').textContent='Story saved on this device!';
+document.getElementById("status").textContent="कथा या डिव्हाइसवर सेव्ह झाली.";
 }
+
 function showHistory(){
 const items=getSaved();
-const box=document.getElementById('history');
-box.innerHTML='';
-if(!items.length){box.textContent='No saved stories yet.';return;}
+const box=document.getElementById("history");
+box.replaceChildren();
+
+if(!items.length){
+box.textContent="अजून कोणतीही कथा सेव्ह केलेली नाही.";
+return;
+}
+
 items.forEach((item,i)=>{
-const card=document.createElement('div');
-card.className='card';
-const title=document.createElement('h3');
-title.textContent=item.topic+' ('+item.lang+')';
-const story=document.createElement('p');
+const card=document.createElement("div");
+card.className="card";
+const title=document.createElement("h3");
+title.textContent=item.topic+" ("+item.lang+")";
+const story=document.createElement("p");
 story.textContent=item.story;
-const load=document.createElement('button');
-load.textContent='Open Story';
-load.onclick=()=>{currentStory=item.story;document.getElementById('topic').value=item.topic;document.getElementById('lang').value=item.lang;document.getElementById('result').textContent=item.story;document.getElementById('saveBtn').hidden=false;window.scrollTo(0,0)};
-const del=document.createElement('button');
-del.textContent='Delete';
-del.onclick=()=>{let a=getSaved();a.splice(i,1);localStorage.setItem('storymitraHistory',JSON.stringify(a));showHistory()};
-card.append(title,story,load,del);box.append(card);
+const open=document.createElement("button");
+open.textContent="कथा उघडा";
+open.onclick=()=>{
+currentStory=item.story;
+document.getElementById("topic").value=item.topic;
+document.getElementById("lang").value=item.lang;
+document.getElementById("result").textContent=item.story;
+document.getElementById("saveBtn").hidden=false;
+window.location.hash="stories";
+};
+const del=document.createElement("button");
+del.textContent="ही कथा हटवा";
+del.onclick=()=>{
+const all=getSaved();
+all.splice(i,1);
+localStorage.setItem("storymitraHistory",JSON.stringify(all));
+showHistory();
+};
+card.append(title,story,open,del);
+box.append(card);
 });
 }
-function clearHistory(){if(confirm('Delete all saved stories?')){localStorage.removeItem('storymitraHistory');showHistory()}}
+
+function clearHistory(){
+if(confirm("सर्व सेव्ह केलेल्या कथा हटवायच्या आहेत का?")){
+localStorage.removeItem("storymitraHistory");
+showHistory();
+}
+}
+
+document.getElementById("year").textContent=new Date().getFullYear();
 showHistory();
 </script>
-</main>
 </body>
 </html>
+
